@@ -4,11 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +28,8 @@ import com.example.taskmanager.Model.Task
 fun TaskCard(
     data: Task,
     onDelete: () -> Unit,
-    onEdit: () -> Unit
+    onEdit: () -> Unit,
+    onToggleComplete: (Boolean) -> Unit  // Function to mark task as completed/uncompleted
 ) {
     val bgColor = when (data.priority) {
         "High" -> Color(0xFFFFCDD2) // Reddish shade
@@ -35,59 +40,96 @@ fun TaskCard(
 
     Column(
         modifier = Modifier
-            .padding(top = 16.dp,start = 16.dp,end = 16.dp)
+            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             .background(
                 color = bgColor,
                 shape = RoundedCornerShape(16.dp)
             )
+            .fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = data.title,
-                modifier = Modifier
-                    .padding(start = 12.dp, end = 12.dp)
-                    .weight(1f),
-                fontSize = 20.sp,
+
+            Row(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = data.title,
+                    modifier = Modifier
+                        .padding(start = 12.dp, end = 12.dp),
+                    fontSize = 20.sp,
+                )
+                if (data.isCompleted) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = "Completed",
+                        tint = Color.Blue,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+
+            Checkbox(
+                checked = data.isCompleted,
+                onCheckedChange = { onToggleComplete(it) },
+                modifier = Modifier.padding(12.dp)
             )
-            // Removed the priority text as it's now represented by color
-            // You could also keep it, but visually representing priority with color looks more intuitive.
+
+
+            // Edit icon for editing the task
+
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = data.description,
+                modifier = Modifier
+                    .padding(top = 12.dp, start = 12.dp)
+                    .weight(1f),
+                fontSize = 15.sp,
+                lineHeight = 20.sp
+            )
+
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = null,
                 tint = Color.Black,
                 modifier = Modifier
-                    .padding(12.dp)
+                    .padding(
+                        end = 24.dp
+                    )
                     .clickable { onEdit() }
             )
         }
-        Text(
-            text = data.description,
-            modifier = Modifier.padding(top = 12.dp, start = 12.dp),
-            fontSize = 15.sp,
-            lineHeight = 20.sp
-        )
+
         Row(
             modifier = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Due date of the task
             Text(
                 text = data.dueDate,
                 modifier = Modifier.weight(1f),
                 fontSize = 13.sp,
                 lineHeight = 20.sp
             )
+
+            // Delete icon to delete the task
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = null,
                 tint = Color.Black,
                 modifier = Modifier
                     .clickable { onDelete() }
+                    .padding(end = 14.dp)
             )
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -101,6 +143,7 @@ fun PreviewTaskCard() {
             isCompleted = false
         ),
         onDelete = {},
-        onEdit = {}
+        onEdit = {},
+        onToggleComplete = {}
     )
 }
