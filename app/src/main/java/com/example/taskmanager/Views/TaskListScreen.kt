@@ -63,36 +63,5 @@ fun TaskListScreen(
                 }
             )
         }
-        item {
-            Card(
-                modifier = Modifier
-                    .padding(top = 16.dp,start = 16.dp,end = 16.dp)
-                    .clickable { onAddClicked() },
-                shape = RoundedCornerShape(8.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-            )  {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(14.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add Icon",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(48.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Click here to add the details",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight(500),
-                        lineHeight = 20.sp,
-                        color = Color.Gray
-                    )
-                }
-            }
-        }
     }
 }

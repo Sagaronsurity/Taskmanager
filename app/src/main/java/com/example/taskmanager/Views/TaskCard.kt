@@ -55,19 +55,11 @@ fun TaskCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = data.title,
+                    text = data.title+ if(data.isCompleted) "  ✔" else "",
                     modifier = Modifier
                         .padding(start = 12.dp, end = 12.dp),
                     fontSize = 20.sp,
                 )
-                if (data.isCompleted) {
-                    Icon(
-                        imageVector = Icons.Default.CheckCircle,
-                        contentDescription = "Completed",
-                        tint = Color.Blue,
-                        modifier = Modifier.size(16.dp)
-                    )
-                }
             }
 
             Checkbox(

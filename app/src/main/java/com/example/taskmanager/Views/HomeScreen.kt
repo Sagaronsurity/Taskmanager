@@ -1,5 +1,7 @@
 package com.example.taskmanager.Views
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -17,7 +19,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.taskmanager.Model.Task
 import com.example.taskmanager.ViewModel.TaskViewModel
@@ -55,9 +61,20 @@ fun TaskApp() {
             }
         },
         topBar = {
-            TopAppBar(
-                title = { Text("Task Manager") }
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(top = 34.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(text = "Task-Tide",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(text = "Organize your tasks smoothly.",
+                    fontSize = 16.sp
+                )
+            }
         }
     ) {
         when (selectedScreen) {
